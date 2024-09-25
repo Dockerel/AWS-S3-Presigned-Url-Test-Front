@@ -1,5 +1,6 @@
 const uploadBtn = document.querySelector("#uploadBtn");
 const downloadBtn = document.querySelector("#downloadBtn");
+const deleteBtn = document.querySelector("#deleteBtn");
 
 const baseUrl = "http://localhost:8080/api/files/presigned";
 
@@ -34,7 +35,7 @@ function handleUploadBtnClick() {
 }
 
 function handledownloadBtnClick() {
-  const filenameInput = document.querySelector("#filenameInput");
+  const filenameInput = document.querySelector("#filenameInput1");
   const filename = filenameInput.value;
 
   const reqObj = { filename };
@@ -69,5 +70,29 @@ function handledownloadBtnClick() {
     });
 }
 
+function handledeleteBtnClick() {
+  const filenameInput = document.querySelector("#filenameInput2");
+  const filename = filenameInput.value;
+
+  const reqObj = { filename };
+
+  fetch(`${baseUrl}/delete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(reqObj),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      fetch(data.url, {
+        method: "DELETE",
+      }).then(console.log("deleted successfully"));
+    });
+}
+
 uploadBtn.addEventListener("click", handleUploadBtnClick);
 downloadBtn.addEventListener("click", handledownloadBtnClick);
+deleteBtn.addEventListener("click", handledeleteBtnClick);
