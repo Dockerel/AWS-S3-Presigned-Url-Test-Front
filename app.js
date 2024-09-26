@@ -30,7 +30,7 @@ function handleUploadBtnClick() {
           "Content-Type": file.type,
         },
         body: file,
-      }).then((res) => console.log(res));
+      }).then(console.log("uploaded successfully"));
     });
 }
 
@@ -66,7 +66,8 @@ function handledownloadBtnClick() {
 
           element.parentNode.removeChild(element);
           window.URL.revokeObjectURL(url);
-        });
+        })
+        .then(console.log("downloaded successfully"));
     });
 }
 
